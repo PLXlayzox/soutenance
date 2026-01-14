@@ -3,362 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Développeur</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
-            color: #e0e0e0;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        header {
-            text-align: center;
-            padding: 4rem 0;
-            position: relative;
-        }
-
-        .glitch {
-            font-size: 4rem;
-            font-weight: bold;
-            color: #00ff88;
-            text-shadow: 0 0 10px #00ff88;
-            animation: fadeInDown 1s ease-out;
-        }
-
-        .subtitle {
-            font-size: 1.5rem;
-            color: #888;
-            margin-top: 1rem;
-            animation: fadeIn 1.5s ease-out;
-        }
-
-        .hero-section {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: 4rem 0;
-            gap: 3rem;
-            animation: slideInLeft 1s ease-out;
-        }
-
-        .hero-content {
-            flex: 1;
-        }
-
-        .hero-content h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #00ff88;
-        }
-
-        .hero-content p {
-            line-height: 1.8;
-            color: #b0b0b0;
-            font-size: 1.1rem;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 4rem 0;
-        }
-
-        .skill-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2rem;
-            border-radius: 10px;
-            border: 1px solid rgba(0, 255, 136, 0.2);
-            transition: all 0.3s ease;
-            animation: fadeInUp 1s ease-out;
-            animation-fill-mode: both;
-        }
-
-        .skill-card:nth-child(1) { animation-delay: 0.2s; }
-        .skill-card:nth-child(2) { animation-delay: 0.4s; }
-        .skill-card:nth-child(3) { animation-delay: 0.6s; }
-        .skill-card:nth-child(4) { animation-delay: 0.8s; }
-
-        .skill-card:hover {
-            transform: translateY(-10px);
-            border-color: #00ff88;
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
-            background: rgba(0, 255, 136, 0.1);
-        }
-
-        .skill-card h3 {
-            color: #00ff88;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .skill-card ul {
-            list-style: none;
-        }
-
-        .skill-card li {
-            padding: 0.5rem 0;
-            color: #b0b0b0;
-            position: relative;
-            padding-left: 1.5rem;
-        }
-
-        .skill-card li:before {
-            content: "▹";
-            position: absolute;
-            left: 0;
-            color: #00ff88;
-        }
-
-        .cta-section {
-            text-align: center;
-            margin: 6rem 0;
-            animation: fadeIn 2s ease-out;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 1rem 2.5rem;
-            border: 2px solid #00ff88;
-            background: transparent;
-            color: #00ff88;
-            font-size: 1rem;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn:hover {
-            background: #00ff88;
-            color: #0a0a0a;
-            transform: scale(1.05);
-            box-shadow: 0 0 20px #00ff88;
-        }
-
-        .floating-shapes {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .shape {
-            position: absolute;
-            border: 1px solid rgba(0, 255, 136, 0.2);
-            animation: float 20s infinite ease-in-out;
-        }
-
-        .shape1 {
-            width: 100px;
-            height: 100px;
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .shape2 {
-            width: 150px;
-            height: 150px;
-            top: 60%;
-            right: 10%;
-            animation-delay: 5s;
-        }
-
-        .shape3 {
-            width: 80px;
-            height: 80px;
-            bottom: 20%;
-            left: 60%;
-            animation-delay: 10s;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-50px) rotate(180deg);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .glitch {
-                font-size: 2.5rem;
-            }
-
-            .hero-section {
-                flex-direction: column;
-            }
-
-            .hero-content h2 {
-                font-size: 2rem;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <title>Rapport de Stage - Billy Lenfant - BTS CIEL</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="floating-shapes">
-        <div class="shape shape1"></div>
-        <div class="shape shape2"></div>
-        <div class="shape shape3"></div>
-    </div>
-
     <div class="container">
         <header>
-            <h1 class="glitch">Billy</h1>
-            <p class="subtitle">Développeur</p>
+            <h1>Rapport de Stage - BTS CIEL</h1>
+            <p class="subtitle">Transformation Digitale & Intégration de Solutions Cloud</p>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Étudiant</div>
+                    <div class="info-value">Billy Lenfant</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Entreprise</div>
+                    <div class="info-value">Cyrias - Vannes</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Période</div>
+                    <div class="info-value">19 Mai - 27 Juin 2025</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Maître de stage</div>
+                    <div class="info-value">Stéphane Verardo</div>
+                </div>
+            </div>
         </header>
 
-        <section class="hero-section">
-            <div class="hero-content">
-                <h2>À propos</h2>
-                <p>
-                    Passionné par le développement web et les nouvelles technologies, 
-                    je crée des applications modernes et performantes. Mon objectif est 
-                    de transformer des idées en solutions numériques élégantes et fonctionnelles.
-                </p>
-            </div>
-        </section>
-
-        <section class="skills-grid">
-            <div class="skill-card">
-                <h3>Frontend</h3>
-                <ul>
-                    <li>HTML5 / CSS3</li>
-                    <li>JavaScript / TypeScript</li>
-                    <li>React / Vue.js</li>
-                    <li>Responsive Design</li>
-                </ul>
-            </div>
-
-            <div class="skill-card">
-                <h3>Backend</h3>
-                <ul>
-                    <li>Node.js / Express</li>
-                    <li>Python / Django</li>
-                    <li>PHP / Laravel</li>
-                    <li>API REST / GraphQL</li>
-                </ul>
-            </div>
-
-            <div class="skill-card">
-                <h3>Base de données</h3>
-                <ul>
-                    <li>MySQL / PostgreSQL</li>
-                    <li>MongoDB</li>
-                    <li>Redis</li>
-                    <li>Firebase</li>
-                </ul>
-            </div>
-
-            <div class="skill-card">
-                <h3>Outils</h3>
-                <ul>
-                    <li>Git / GitHub</li>
-                    <li>Docker</li>
-                    <li>CI/CD</li>
-                    <li>AWS / Heroku</li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="cta-section">
-            <h2 style="color: #00ff88; font-size: 2rem; margin-bottom: 1rem;">Travaillons ensemble</h2>
-            <p style="color: #b0b0b0; font-size: 1.2rem;">Vous avez un projet en tête ? Discutons-en !</p>
-            <div class="cta-buttons">
-                <a href="mailto:votre@email.com" class="btn">Me contacter</a>
-                <a href="#" class="btn">Voir mes projets</a>
-            </div>
-        </section>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const skillCards = document.querySelectorAll('.skill-card');
+        <div class="section">
+            <h2>🏢 Présentation de l'Entreprise</h2>
+            <p><strong>Cyrias</strong> est une société française fondée en 2018, spécialisée dans la transformation digitale des directions Achats et Finances. L'entreprise accompagne ses clients dans l'intégration de solutions Cloud, notamment la plateforme <strong>Ivalua</strong>, qui optimise les processus Source-to-Contract (S2C) et Procure-to-Pay (P2P).</p>
             
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, { threshold: 0.1 });
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h3>👥 Effectif</h3>
+                        <p>~30 collaborateurs répartis sur 5 bureaux en France</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <h3>💼 Clients</h3>
+                        <p>Vinci Energies, Asmodee, Arpavie, HDF Energy</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <h3>🎯 Expertise</h3>
+                        <p>Intégration Ivalua, développement, support technique</p>
+                    </div>
+                </div>
+            </div>
 
-            skillCards.forEach(card => observer.observe(card));
-        });
-    </script>
+            <h3>Culture d'entreprise</h3>
+            <p>Cyrias se distingue par ses valeurs centrées sur la collaboration, l'innovation technique et la qualité de vie au travail. L'équipe favorise l'entraide et le partage de connaissances dans un environnement stimulant.</p>
+        </div>
+
+        <div class="section">
+            <h2>🎯 Missions Principales</h2>
+            <p>Durant mon stage de six semaines au sein de l'équipe technique de développement et d'intégration, j'ai progressivement monté en compétences sur des projets variés :</p>
+            
+            <h3>Formation et Résolution de Tickets</h3>
+            <ul>
+                <li>Maîtrise approfondie du langage SQL (requêtes simples et complexes)</li>
+                <li>Gestion de tickets techniques en environnement sandbox (N1 et N2)</li>
+                <li>Formation aux outils internes et aux bonnes pratiques de sécurité</li>
+                <li>Analyse et comparaison avec des cas de production réels</li>
+            </ul>
+
+            <h3>Développement de Solutions Techniques</h3>
+            <ul>
+                <li>Conception et mise en place de workflows automatisés</li>
+                <li>Développement d'un ETL (Extract, Transform, Load) pour l'import de données Excel</li>
+                <li>Création d'une API REST avec sortie XML pour l'intégration système</li>
+                <li>Tests et validation en environnement sandbox</li>
+            </ul>
+
+            <h3>Design et Ergonomie</h3>
+            <ul>
+                <li>Définition et intégration de règles de design sur une application client</li>
+                <li>Harmonisation de l'affichage et amélioration de l'ergonomie</li>
+                <li>Optimisation de l'expérience utilisateur</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>📊 Projet Principal : ETL & Workflow</h2>
+            <h3>Automatisation de la Génération de Contrats</h3>
+            <p><strong>Contexte :</strong> Cyrias avait besoin d'un outil permettant d'importer des données depuis Excel et de générer automatiquement des contrats via un workflow intégré à la plateforme Ivalua.</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Phase 1 : Analyse & Conception</h3>
+                    <p>Étude des besoins, analyse des données sources et définition de l'architecture de l'ETL</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Phase 2 : Développement du Workflow</h3>
+                    <p>Conception d'un workflow automatisé pour gérer le processus de bout en bout</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Phase 3 : Création de l'ETL</h3>
+                    <p>Développement de l'outil d'extraction, transformation et chargement des données</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Phase 4 : Tests & Validation</h3>
+                    <p>Tests approfondis en sandbox et validation par l'équipe technique</p>
+                </div>
+            </div>
+
+            <h3>Développement de l'API</h3>
+            <p>En parallèle, j'ai conçu une API pour permettre la communication avec des systèmes externes, avec une sortie au format XML pour garantir l'interopérabilité.</p>
+
+            <h3>Résultats Obtenus</h3>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h3>⚡ Automatisation</h3>
+                        <p>Processus de génération de contrats entièrement automatisé</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <h3>🔧 Réutilisabilité</h3>
+                        <p>Outils techniques validés et réutilisables par l'équipe</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <h3>✅ Fiabilité</h3>
+                        <p>Tests complets en sandbox garantissant la qualité</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎓 Compétences Acquises</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h3>💻 Techniques</h3>
+                        <ul>
+                            <li>SQL avancé (requêtes complexes)</li>
+                            <li>Développement d'ETL</li>
+                            <li>Création d'API REST</li>
+                            <li>Workflows automatisés</li>
+                            <li>XML et intégration de systèmes</li>
+                            <li>Plateforme Ivalua</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <h3>🤝 Professionnelles</h3>
+                        <ul>
+                            <li>Gestion de tickets en production</li>
+                            <li>Travail en équipe technique</li>
+                            <li>Autonomie et recherche de solutions</li>
+                            <li>Communication avec les collaborateurs</li>
+                            <li>Respect des bonnes pratiques</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <h3>🎯 Méthodologiques</h3>
+                        <ul>
+                            <li>Tests en environnement sandbox</li>
+                            <li>Approche progressive des problèmes</li>
+                            <li>Documentation technique</li>
+                            <li>Validation par pairs</li>
+                            <li>Sécurité informatique</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>⚠️ Défis & Solutions</h2>
+            <div class="challenges-grid">
+                <div class="challenge-card">
+                    <h3>🔍 Complexité SQL</h3>
+                    <p><strong>Défi :</strong> Certaines requêtes SQL nécessitaient une logique avancée et des jointures complexes.</p>
+                    <p><strong>Solution :</strong> Décomposition des requêtes en sous-problèmes, consultation de la documentation et aide des collaborateurs expérimentés.</p>
+                </div>
+                <div class="challenge-card">
+                    <h3>🛠️ Blocages Techniques</h3>
+                    <p><strong>Défi :</strong> Problèmes de serveur et difficultés de compréhension de la logique métier client.</p>
+                    <p><strong>Solution :</strong> Adaptabilité, recherche autonome et communication avec l'équipe pour débloquer les situations.</p>
+                </div>
+                <div class="challenge-card">
+                    <h3>📊 Workflows Clients</h3>
+                    <p><strong>Défi :</strong> Compréhension des workflows spécifiques aux besoins clients.</p>
+                    <p><strong>Solution :</strong> Observation de cas réels, analyse comparative et approche itérative.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>💭 Conclusion</h2>
+            <p>Ce stage de six semaines chez Cyrias a été une expérience formatrice qui m'a permis de mettre en pratique mes connaissances théoriques acquises en BTS CIEL dans un contexte professionnel réel et exigeant.</p>
+            
+            <p>J'ai pu développer une solide expertise en <strong>SQL</strong>, découvrir les enjeux de la <strong>transformation digitale</strong> et comprendre le fonctionnement d'une équipe technique dans un environnement Cloud. La gestion de tickets en sandbox m'a appris la rigueur nécessaire au développement, tandis que la création d'outils techniques (ETL, API, workflows) m'a permis d'aborder des projets structurants de bout en bout.</p>
+            
+            <p>L'accueil chaleureux de l'équipe et les conseils avisés de mon maître de stage, M. Stéphane Verardo, ont grandement contribué à ma montée en compétences et à mon autonomie professionnelle.</p>
+            
+            <p><strong>Perspectives :</strong> Ce stage confirme mon orientation vers les métiers de l'informatique, des réseaux et de la cybersécurité. Il constitue une étape clé dans mon parcours et me motive à poursuivre dans le domaine du développement et de l'intégration de solutions techniques.</p>
+        </div>
+
+        <footer>
+            <h2>Merci de votre attention</h2>
+            <p style="margin: 20px 0; color: #aaa;">Questions ? N'hésitez pas !</p>
+            <a href="#" class="btn">📄 Télécharger le Rapport Complet</a>
+        </footer>
+    </div>
 </body>
 </html>
