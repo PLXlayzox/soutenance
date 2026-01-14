@@ -7,6 +7,54 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Navigation latérale gauche -->
+    <nav class="side-nav" id="sideNav">
+        <div class="side-nav-header">Navigation</div>
+        <a href="#entreprise" class="side-nav-link" onclick="scrollToSection('entreprise'); return false;">
+            <span class="nav-icon">🏢</span>
+            <span class="nav-text">L'Entreprise</span>
+        </a>
+        <a href="#contexte" class="side-nav-link" onclick="scrollToSection('contexte'); return false;">
+            <span class="nav-icon">📋</span>
+            <span class="nav-text">Contexte</span>
+        </a>
+        <a href="#missions" class="side-nav-link" onclick="scrollToSection('missions'); return false;">
+            <span class="nav-icon">💼</span>
+            <span class="nav-text">Missions</span>
+        </a>
+        <a href="#projet" class="side-nav-link" onclick="scrollToSection('projet'); return false;">
+            <span class="nav-icon">⚡</span>
+            <span class="nav-text">Projet Principal</span>
+        </a>
+        <a href="#competences" class="side-nav-link" onclick="scrollToSection('competences'); return false;">
+            <span class="nav-icon">🎯</span>
+            <span class="nav-text">Compétences</span>
+        </a>
+        <a href="#bilan" class="side-nav-link" onclick="scrollToSection('bilan'); return false;">
+            <span class="nav-icon">✅</span>
+            <span class="nav-text">Bilan</span>
+        </a>
+    </nav>
+
+    <!-- Timer Panel droit -->
+    <div class="timer-panel" id="timerPanel">
+        <div class="timer-toggle" onclick="toggleTimer()">
+            <span id="timerIcon">⏱️</span>
+        </div>
+        <div class="timer-content" id="timerContent">
+            <div class="timer-header">Chronomètre</div>
+            <div class="timer-display" id="timerDisplay">15:00</div>
+            <div class="timer-progress">
+                <div class="timer-progress-bar" id="timerProgressBar"></div>
+            </div>
+            <div class="timer-controls">
+                <button class="timer-btn" id="startBtn" onclick="startTimer()">▶️ Démarrer</button>
+                <button class="timer-btn" id="pauseBtn" onclick="pauseTimer()" style="display:none;">⏸️ Pause</button>
+                <button class="timer-btn" id="resetBtn" onclick="resetTimer()">🔄 Reset</button>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <!-- Header -->
         <header>
@@ -31,16 +79,6 @@
                 </div>
             </div>
         </header>
-
-        <!-- Navigation -->
-        <nav class="nav-section">
-            <button class="nav-btn" onclick="scrollToSection('entreprise')">L'Entreprise</button>
-            <button class="nav-btn" onclick="scrollToSection('contexte')">Contexte</button>
-            <button class="nav-btn" onclick="scrollToSection('missions')">Missions</button>
-            <button class="nav-btn" onclick="scrollToSection('projet')">Projet Principal</button>
-            <button class="nav-btn" onclick="scrollToSection('competences')">Compétences</button>
-            <button class="nav-btn" onclick="scrollToSection('bilan')">Bilan</button>
-        </nav>
 
         <!-- Section 1: Présentation de l'entreprise -->
         <section class="section" id="entreprise">
@@ -419,7 +457,7 @@
                     <div class="result-label">Orientation vers les métiers de développeur backend ou ingénieur DevOps</div>
                 </div>
                 <div class="result-card">
-                    <div class="stat-icon">🔒</div>
+                    <div class="stat-icon">🔐</div>
                     <div class="result-label">Spécialisation en sécurité des systèmes d'information</div>
                 </div>
             </div>

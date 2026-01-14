@@ -11,12 +11,258 @@ body {
     line-height: 1.8;
     overflow-x: hidden;
     font-size: 18px;
+    padding-left: 280px;
+    padding-right: 80px;
+    transition: padding 0.3s ease;
+}
+
+@media (max-width: 1200px) {
+    body {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+/* Scrollbar personnalisée pour le body */
+body {
+    scrollbar-width: thin;
+    scrollbar-color: #333 #0d0d0d;
+}
+
+body::-webkit-scrollbar {
+    width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+    background: #0d0d0d;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 5px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: #444;
 }
 
 .container {
     max-width: 1400px;
     margin: 0 auto;
     padding: 40px 20px;
+}
+
+/* Navigation latérale gauche */
+.side-nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 260px;
+    height: 100vh;
+    background: #0a0a0a;
+    border-right: 1px solid #1a1a1a;
+    padding: 30px 0;
+    z-index: 100;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #333 #0d0d0d;
+}
+
+.side-nav::-webkit-scrollbar {
+    width: 6px;
+}
+
+.side-nav::-webkit-scrollbar-track {
+    background: #0d0d0d;
+}
+
+.side-nav::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 3px;
+}
+
+.side-nav::-webkit-scrollbar-thumb:hover {
+    background: #444;
+}
+
+.side-nav-header {
+    padding: 0 25px 20px;
+    font-size: 0.9em;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.side-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 25px;
+    color: #777;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.side-nav-link:hover {
+    background: #0d0d0d;
+    color: #bbb;
+    border-left-color: #333;
+}
+
+.side-nav-link.active {
+    background: #0d0d0d;
+    color: #ddd;
+    border-left-color: #4a9eff;
+}
+
+.nav-icon {
+    font-size: 1.3em;
+    min-width: 24px;
+}
+
+.nav-text {
+    font-size: 1em;
+    font-weight: 500;
+}
+
+@media (max-width: 1200px) {
+    .side-nav {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    .side-nav.mobile-open {
+        transform: translateX(0);
+    }
+}
+
+/* Timer Panel droit */
+.timer-panel {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+}
+
+.timer-toggle {
+    width: 50px;
+    height: 50px;
+    background: #0d0d0d;
+    border: 1px solid #1a1a1a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.5em;
+    margin-left: auto;
+}
+
+.timer-toggle:hover {
+    background: #1a1a1a;
+    border-color: #333;
+    transform: scale(1.1);
+}
+
+.timer-content {
+    position: absolute;
+    right: 70px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #0a0a0a;
+    border: 1px solid #1a1a1a;
+    border-radius: 8px;
+    padding: 25px;
+    min-width: 220px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.timer-content.open {
+    opacity: 1;
+    pointer-events: all;
+    right: 80px;
+}
+
+.timer-header {
+    font-size: 0.9em;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.timer-display {
+    font-size: 3em;
+    font-weight: 700;
+    color: #4a9eff;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 15px;
+}
+
+.timer-progress {
+    width: 100%;
+    height: 6px;
+    background: #0d0d0d;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.timer-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #4a9eff, #2d7acc);
+    width: 100%;
+    transition: width 0.3s ease;
+}
+
+.timer-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.timer-btn {
+    padding: 10px 15px;
+    background: #0d0d0d;
+    color: #888;
+    border: 1px solid #1a1a1a;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95em;
+    font-family: inherit;
+}
+
+.timer-btn:hover {
+    background: #1a1a1a;
+    color: #bbb;
+    border-color: #333;
+}
+
+.timer-btn:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 1200px) {
+    .timer-panel {
+        right: 10px;
+    }
+    
+    .timer-content {
+        right: 60px;
+    }
+    
+    .timer-content.open {
+        right: 70px;
+    }
 }
 
 /* Header */
@@ -93,37 +339,6 @@ h1 {
     font-size: 1.3em;
     color: #ddd;
     font-weight: 500;
-}
-
-/* Navigation */
-.nav-section {
-    background: #0a0a0a;
-    padding: 20px 30px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-    border: 1px solid #1a1a1a;
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.nav-btn {
-    padding: 12px 24px;
-    background: #0d0d0d;
-    color: #777;
-    border: 1px solid #1a1a1a;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1.1em;
-    font-family: inherit;
-}
-
-.nav-btn:hover {
-    background: #1a1a1a;
-    color: #bbb;
-    border-color: #333;
 }
 
 /* Sections */
@@ -373,6 +588,25 @@ strong {
     opacity: 0;
     transition: opacity 0.5s ease;
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #333 #000;
+}
+
+.carousel-slide::-webkit-scrollbar {
+    width: 8px;
+}
+
+.carousel-slide::-webkit-scrollbar-track {
+    background: #000;
+}
+
+.carousel-slide::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
+
+.carousel-slide::-webkit-scrollbar-thumb:hover {
+    background: #444;
 }
 
 .carousel-slide.active {
@@ -537,27 +771,6 @@ footer h2 {
 .btn:hover {
     background: #222;
     color: #bbb;
-}
-
-/* Masquer la scrollbar globale */
-html, body {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-    display: none;
-}
-
-/* Masquer scrollbar uniquement dans les blocs de code */
-.carousel-slide {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-.carousel-slide::-webkit-scrollbar {
-    display: none;
 }
 
 /* Cartes clients interactives */
@@ -841,10 +1054,6 @@ body::-webkit-scrollbar {
     .stats-grid, 
     .skills-grid { 
         grid-template-columns: 1fr; 
-    }
-    
-    .nav-section { 
-        padding: 18px; 
     }
     
     .carousel-content { 

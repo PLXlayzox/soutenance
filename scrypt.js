@@ -1,4 +1,97 @@
 // ===========================================
+// TIMER FUNCTIONALITY
+// ===========================================
+
+let timerInterval = null;
+let timeRemaining = 15 * 60; // 15 minutes en secondes
+const totalTime = 15 * 60;
+let isTimerRunning = false;
+
+function toggleTimer() {
+    const content = document.getElementById('timerContent');
+    content.classList.toggle('open');
+}
+
+function updateTimerDisplay() {
+    const minutes = Math.floor(timeRemaining / 60);
+    const seconds = timeRemaining % 60;
+    document.getElementById('timerDisplay').textContent = 
+        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    const progressBar = document.getElementById('timerProgressBar');
+    const progress = (timeRemaining / totalTime) * 100;
+    progressBar.style.width = progress + '%';
+    
+    // Changer la couleur selon le temps restant
+    if (progress < 25) {
+        progressBar.style.background = 'linear-gradient(90deg, #ff4a4a, #cc2d2d)';
+    } else if (progress < 50) {
+        progressBar.style.background = 'linear-gradient(90deg, #ffaa4a, #cc7a2d)';
+    } else {
+        progressBar.style.background = 'linear-gradient(90deg, #4a9eff, #2d7acc)';
+    }
+}
+
+function startTimer() {
+    if (isTimerRunning) return;
+    
+    isTimerRunning = true;
+    document.getElementById('startBtn').style.display = 'none';
+    document.getElementById('pauseBtn').style.display = 'block';
+    
+    timerInterval = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            updateTimerDisplay();
+        } else {
+            pauseTimer();
+            alert('⏰ Temps écoulé ! Votre présentation de 15 minutes est terminée.');
+        }
+    }, 1000);
+}
+
+function pauseTimer() {
+    isTimerRunning = false;
+    clearInterval(timerInterval);
+    document.getElementById('startBtn').style.display = 'block';
+    document.getElementById('pauseBtn').style.display = 'none';
+}
+
+function resetTimer() {
+    pauseTimer();
+    timeRemaining = totalTime;
+    updateTimerDisplay();
+}
+
+// ===========================================
+// NAVIGATION ACTIVE
+// ===========================================
+
+function updateActiveNav() {
+    const sections = document.querySelectorAll('.section[id]');
+    const navLinks = document.querySelectorAll('.side-nav-link');
+    
+    let currentSection = '';
+    
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (window.scrollY >= (sectionTop - 200)) {
+            currentSection = section.getAttribute('id');
+        }
+    });
+    
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + currentSection) {
+            link.classList.add('active');
+        }
+    });
+}
+
+window.addEventListener('scroll', updateActiveNav);
+
+// ===========================================
 // CONFIGURATION DES FICHIERS
 // ===========================================
 
@@ -223,26 +316,6 @@ function scrollToSection(id) {
     }
 }
 
-// Effet sur les boutons de navigation
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('.nav-btn').forEach(b => {
-                b.style.background = '#0d0d0d';
-                b.style.color = '#777';
-            });
-            
-            this.style.background = '#4a9eff';
-            this.style.color = '#fff';
-            
-            setTimeout(() => {
-                this.style.background = '#0d0d0d';
-                this.style.color = '#777';
-            }, 300);
-        });
-    });
-});
-
 // ===========================================
 // INTERSECTION OBSERVER (ANIMATIONS)
 // ===========================================
@@ -280,6 +353,10 @@ window.addEventListener('DOMContentLoaded', async () => {
     document.querySelectorAll('.section').forEach(section => {
         observer.observe(section);
     });
+    
+    // Initialiser le timer
+    updateTimerDisplay();
+    updateActiveNav();
     
     console.log('Contenu chargé !');
 });
