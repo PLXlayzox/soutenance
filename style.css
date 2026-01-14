@@ -569,3 +569,25 @@ footer h2 {
         height: 400px; 
     }
 }
+
+/* Masquer la scrollbar globale */
+html, body {
+    scrollbar-width: none;        /* Firefox */
+    -ms-overflow-style: none;     /* IE / Edge legacy */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;                /* Chrome, Edge, Safari */
+}
+
+
+/* Masquer scrollbar uniquement dans les blocs de code */
+.carousel-slide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.carousel-slide::-webkit-scrollbar {
+    display: none;
+}
