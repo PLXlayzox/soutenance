@@ -124,7 +124,6 @@ const sqlFiles = {
 
 const imageFiles = [
     'ressources/images/image.png',
-    'ressources/images/image(1).png',
     'ressources/images/image(2).png',
     'ressources/images/image(3).png',
     'ressources/images/image(4).png',
@@ -228,7 +227,7 @@ function openImageModal(imgSrc) {
 
 // Charger les requêtes SQL dans le carousel
 async function loadSQLCarousel() {
-    console.log('🔄 Chargement du carousel SQL...');
+    console.log('📄 Chargement du carousel SQL...');
     const carouselContainer = document.getElementById('sql-carousel');
     const navContainer = document.getElementById('carousel-nav');
     

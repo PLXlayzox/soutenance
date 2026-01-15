@@ -893,6 +893,75 @@ footer h2 {
     text-align: center;
 }
 
+/* Section économique */
+.economic-section {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 30px;
+    margin: 30px 0;
+    align-items: start;
+}
+
+.economic-chart {
+    background: #0d0d0d;
+    padding: 25px;
+    border-radius: 6px;
+    border: 1px solid #1a1a1a;
+    text-align: center;
+}
+
+.chart-img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.chart-caption {
+    color: #666;
+    font-size: 0.95em;
+    font-style: italic;
+    margin: 10px 0 0 0;
+}
+
+.economic-insights {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.insight-card {
+    background: #0d0d0d;
+    padding: 20px;
+    border-radius: 6px;
+    border: 1px solid #1a1a1a;
+    transition: all 0.3s ease;
+}
+
+.insight-card:hover {
+    background: #111;
+    border-color: #4a9eff;
+    transform: translateX(5px);
+}
+
+.insight-icon {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.insight-title {
+    font-size: 1.3em;
+    color: #ccc;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.insight-desc {
+    color: #777;
+    font-size: 1em;
+    line-height: 1.6;
+}
+
 /* Sections pliables */
 .collapsible-section {
     margin: 30px 0;
@@ -1187,6 +1256,10 @@ footer h2 {
 
 @media (max-width: 968px) {
     .two-column {
+        grid-template-columns: 1fr;
+    }
+    
+    .economic-section {
         grid-template-columns: 1fr;
     }
     
