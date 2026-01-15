@@ -7,7 +7,27 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Navigation latérale gauche -->
+    <!-- Barre de progression horizontale -->
+    <div class="progress-bar-container">
+        <div class="progress-content">
+            <div class="progress-time" id="timerDisplay">15:00</div>
+            <div class="horizontal-progress-bar">
+                <div class="horizontal-progress-fill" id="timerProgressBar"></div>
+            </div>
+            <div class="progress-controls">
+                <button class="progress-btn" id="startBtn" onclick="startTimer()">▶</button>
+                <button class="progress-btn" id="pauseBtn" onclick="pauseTimer()" style="display:none;">⏸</button>
+                <button class="progress-btn" id="resetBtn" onclick="resetTimer()">🔄</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bouton menu mobile -->
+    <div class="mobile-menu-btn" onclick="toggleMobileMenu()">
+        ☰ Menu
+    </div>
+
+    <!-- Navigation latérale -->
     <nav class="side-nav" id="sideNav">
         <div class="side-nav-header">Navigation</div>
         <a href="#entreprise" class="side-nav-link" onclick="scrollToSection('entreprise'); return false;">
@@ -39,22 +59,6 @@
             <span class="nav-text">Bilan</span>
         </a>
     </nav>
-
-    <!-- Barre de progression verticale -->
-    <div class="progress-bar-container">
-        <div class="progress-info">
-            <div class="progress-label">Temps</div>
-            <div class="progress-time" id="timerDisplay">15:00</div>
-        </div>
-        <div class="vertical-progress-bar">
-            <div class="vertical-progress-fill" id="timerProgressBar"></div>
-        </div>
-        <div class="progress-controls">
-            <button class="progress-btn" id="startBtn" onclick="startTimer()" title="Démarrer">▶</button>
-            <button class="progress-btn" id="pauseBtn" onclick="pauseTimer()" style="display:none;" title="Pause">⏸</button>
-            <button class="progress-btn" id="resetBtn" onclick="resetTimer()" title="Réinitialiser">🔄</button>
-        </div>
-    </div>
 
     <div class="container">
         <!-- Header -->

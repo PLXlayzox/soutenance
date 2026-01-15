@@ -1,5 +1,5 @@
 // ===========================================
-// TIMER FUNCTIONALITY - BARRE VERTICALE
+// TIMER FUNCTIONALITY - BARRE HORIZONTALE
 // ===========================================
 
 let timerInterval = null;
@@ -15,15 +15,15 @@ function updateTimerDisplay() {
     
     const progressBar = document.getElementById('timerProgressBar');
     const progress = (timeRemaining / totalTime) * 100;
-    progressBar.style.height = progress + '%';
+    progressBar.style.width = progress + '%';
     
     // Changer la couleur selon le temps restant
     if (progress < 25) {
-        progressBar.style.background = 'linear-gradient(180deg, #ff4a4a, #cc2d2d)';
+        progressBar.style.background = 'linear-gradient(90deg, #ff4a4a, #cc2d2d)';
     } else if (progress < 50) {
-        progressBar.style.background = 'linear-gradient(180deg, #ffaa4a, #cc7a2d)';
+        progressBar.style.background = 'linear-gradient(90deg, #ffaa4a, #cc7a2d)';
     } else {
-        progressBar.style.background = 'linear-gradient(180deg, #4a9eff, #2d7acc)';
+        progressBar.style.background = 'linear-gradient(90deg, #4a9eff, #2d7acc)';
     }
 }
 
@@ -42,7 +42,7 @@ function startTimer() {
             pauseTimer();
             // Animation de fin
             const progressBar = document.getElementById('timerProgressBar');
-            progressBar.style.background = 'linear-gradient(180deg, #ff4a4a, #cc2d2d)';
+            progressBar.style.background = 'linear-gradient(90deg, #ff4a4a, #cc2d2d)';
             alert('⏰ Temps écoulé ! Votre présentation de 15 minutes est terminée.');
         }
     }, 1000);
@@ -101,7 +101,7 @@ const sqlFiles = {
         'ressources/sql/TP_M5.sql',
         'ressources/sql/uefa_PR.sql'
     ],
-    // Tous les autres fichiers SQL (section pliable avec navigation)
+    // Tous les fichiers SQL (section pliable avec navigation)
     all: [
         'ressources/sql/1.sql',
         'ressources/sql/callback.sql',
@@ -401,8 +401,35 @@ function scrollToSection(id) {
             behavior: 'smooth', 
             block: 'start' 
         });
+        
+        // Fermer le menu mobile après navigation
+        if (window.innerWidth <= 968) {
+            toggleMobileMenu();
+        }
     }
 }
+
+// ===========================================
+// MENU MOBILE
+// ===========================================
+
+function toggleMobileMenu() {
+    const nav = document.getElementById('sideNav');
+    nav.classList.toggle('mobile-open');
+}
+
+// Fermer le menu mobile en cliquant en dehors
+document.addEventListener('click', (e) => {
+    const nav = document.getElementById('sideNav');
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    
+    if (window.innerWidth <= 968 && 
+        nav.classList.contains('mobile-open') && 
+        !nav.contains(e.target) && 
+        !menuBtn.contains(e.target)) {
+        nav.classList.remove('mobile-open');
+    }
+});
 
 // ===========================================
 // INTERSECTION OBSERVER (ANIMATIONS)
@@ -442,9 +469,34 @@ document.addEventListener('keydown', (e) => {
     // R = Reset Timer
     if (e.key === 'r' || e.key === 'R') {
         if (!e.target.matches('input, textarea')) {
+            e.preventDefault();
             resetTimer();
         }
     }
+    
+    // Échap = Fermer le menu mobile
+    if (e.key === 'Escape') {
+        const nav = document.getElementById('sideNav');
+        if (nav.classList.contains('mobile-open')) {
+            nav.classList.remove('mobile-open');
+        }
+    }
+});
+
+// ===========================================
+// GESTION DU REDIMENSIONNEMENT
+// ===========================================
+
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        // Fermer le menu mobile si on passe en mode desktop
+        if (window.innerWidth > 968) {
+            const nav = document.getElementById('sideNav');
+            nav.classList.remove('mobile-open');
+        }
+    }, 250);
 });
 
 // ===========================================
@@ -475,5 +527,36 @@ window.addEventListener('DOMContentLoaded', async () => {
     console.log('💡 Raccourcis clavier :');
     console.log('  - Espace : Démarrer/Pause timer');
     console.log('  - R : Reset timer');
+    console.log('  - Échap : Fermer le menu mobile');
     console.log('  - ← → : Naviguer dans le carousel SQL');
 });
+
+// ===========================================
+// DÉTECTION DE VISIBILITÉ DE LA PAGE
+// ===========================================
+
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden && isTimerRunning) {
+        console.log('⏸️ Page cachée - timer continue...');
+        // Option : mettre en pause automatiquement
+        // pauseTimer();
+    }
+});
+
+// ===========================================
+// EXPORTATION POUR DÉBOGAGE (optionnel)
+// ===========================================
+
+window.debugSoutenance = {
+    startTimer,
+    pauseTimer,
+    resetTimer,
+    getTimeRemaining: () => timeRemaining,
+    isRunning: () => isTimerRunning,
+    nextSlide,
+    prevSlide,
+    showSlide,
+    scrollToSection
+};
+
+console.log('🔧 Mode debug disponible : utilisez window.debugSoutenance dans la console');
