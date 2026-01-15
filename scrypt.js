@@ -103,7 +103,7 @@ const sqlFiles = {
         'ressources/sql/TP_M5.sql',
         'ressources/sql/uefa_PR.sql'
     ],
-    // Tous les autres fichiers SQL (section pliable)
+    // Tous les autres fichiers SQL (section pliable avec navigation)
     all: [
         'ressources/sql/1.sql',
         'ressources/sql/callback.sql',
@@ -132,50 +132,84 @@ const imageFiles = [
     'ressources/images/image(6).png'
 ];
 
+// Cache pour les fichiers SQL chargés
+const sqlCache = {};
+
 // ===========================================
 // CHARGEMENT DES FICHIERS
 // ===========================================
 
 async function loadTextFile(path) {
     try {
+        console.log(`📂 Tentative de chargement: ${path}`);
         const response = await fetch(path);
-        if (!response.ok) throw new Error(`Erreur de chargement: ${path}`);
+        if (!response.ok) {
+            console.error(`❌ Erreur ${response.status}: ${path}`);
+            throw new Error(`Erreur de chargement: ${path}`);
+        }
+        console.log(`✅ Chargé avec succès: ${path}`);
         return await response.text();
     } catch (error) {
-        console.error('Erreur:', error);
-        return `-- Erreur lors du chargement du fichier ${path}`;
+        console.error('❌ Erreur:', error);
+        return `-- Erreur lors du chargement du fichier ${path}\n-- Vérifiez que le fichier existe et que le chemin est correct`;
     }
 }
 
 // Charger les fichiers texte
 async function loadDocuments() {
-    // Journal de bord
-    const journalContent = await loadTextFile('ressources/journal de bord.txt');
-    document.getElementById('journal-content').innerHTML = 
-        `<pre class="document-text">${journalContent}</pre>`;
+    console.log('📄 Chargement des documents texte...');
     
-    // Info entreprise
-    const infoContent = await loadTextFile('ressources/info voc entreprise.txt');
-    document.getElementById('info-voc-content').innerHTML = 
-        `<pre class="document-text">${infoContent}</pre>`;
+    try {
+        // Journal de bord
+        const journalContent = await loadTextFile('ressources/journal de bord.txt');
+        document.getElementById('journal-content').innerHTML = 
+            `<pre class="document-text">${journalContent}</pre>`;
+        console.log('✅ Journal de bord chargé');
+    } catch (error) {
+        console.error('❌ Erreur journal de bord:', error);
+    }
     
-    // Exercices
-    const exerciceContent = await loadTextFile('ressources/exercice.txt');
-    document.getElementById('exercice-content').innerHTML = 
-        `<pre class="document-text">${exerciceContent}</pre>`;
+    try {
+        // Info entreprise
+        const infoContent = await loadTextFile('ressources/info voc entreprise.txt');
+        document.getElementById('info-voc-content').innerHTML = 
+            `<pre class="document-text">${infoContent}</pre>`;
+        console.log('✅ Info entreprise chargée');
+    } catch (error) {
+        console.error('❌ Erreur info entreprise:', error);
+    }
+    
+    try {
+        // Exercices
+        const exerciceContent = await loadTextFile('ressources/exercice.txt');
+        document.getElementById('exercice-content').innerHTML = 
+            `<pre class="document-text">${exerciceContent}</pre>`;
+        console.log('✅ Exercices chargés');
+    } catch (error) {
+        console.error('❌ Erreur exercices:', error);
+    }
 }
 
 // Charger les images
 function loadImages() {
+    console.log('🖼️ Chargement de la galerie d\'images...');
     const gallery = document.getElementById('image-gallery');
+    
+    if (!gallery) {
+        console.error('❌ Élément image-gallery non trouvé!');
+        return;
+    }
+    
     imageFiles.forEach((imgPath, index) => {
         const imgDiv = document.createElement('div');
         imgDiv.className = 'gallery-item';
         imgDiv.innerHTML = `
-            <img src="${imgPath}" alt="Aperçu ${index + 1}" onclick="openImageModal('${imgPath}')">
+            <img src="${imgPath}" alt="Aperçu ${index + 1}" onclick="openImageModal('${imgPath}')" onerror="console.error('❌ Erreur chargement image: ${imgPath}')">
         `;
         gallery.appendChild(imgDiv);
     });
+    
+    console.log(`✅ ${imageFiles.length} images ajoutées à la galerie`);
 }
 
 // Modal pour les images
@@ -194,8 +228,14 @@ function openImageModal(imgSrc) {
 
 // Charger les requêtes SQL dans le carousel
 async function loadSQLCarousel() {
+    console.log('🔄 Chargement du carousel SQL...');
     const carouselContainer = document.getElementById('sql-carousel');
     const navContainer = document.getElementById('carousel-nav');
+    
+    if (!carouselContainer || !navContainer) {
+        console.error('❌ Éléments carousel non trouvés!');
+        return;
+    }
     
     carouselContainer.innerHTML = '';
     navContainer.innerHTML = '';
@@ -203,6 +243,7 @@ async function loadSQLCarousel() {
     for (let i = 0; i < sqlFiles.carousel.length; i++) {
         const filePath = sqlFiles.carousel[i];
         const fileName = filePath.split('/').pop();
+        console.log(`📂 Chargement SQL ${i + 1}/${sqlFiles.carousel.length}: ${fileName}`);
         const content = await loadTextFile(filePath);
         
         // Créer le slide
@@ -222,27 +263,54 @@ ${content}</pre>
         dot.onclick = () => showSlide(i);
         navContainer.appendChild(dot);
     }
+    
+    console.log('✅ Carousel SQL chargé avec succès!');
 }
 
-// Charger toutes les requêtes SQL (section pliable)
-async function loadAllSQL() {
-    const container = document.getElementById('all-sql-queries');
-    container.innerHTML = '<div class="loading">Chargement des requêtes...</div>';
+// Charger la navigation SQL avec système de fichiers
+async function loadSQLBrowser() {
+    const sidebar = document.getElementById('sql-sidebar');
+    const viewer = document.getElementById('sql-viewer');
     
-    const sqlItems = [];
-    for (const filePath of sqlFiles.all) {
+    sidebar.innerHTML = '';
+    
+    for (let i = 0; i < sqlFiles.all.length; i++) {
+        const filePath = sqlFiles.all[i];
         const fileName = filePath.split('/').pop();
-        const content = await loadTextFile(filePath);
         
-        sqlItems.push(`
-            <div class="sql-item">
-                <div class="sql-header">${fileName}</div>
-                <pre class="code-block">${content}</pre>
-            </div>
-        `);
+        const fileItem = document.createElement('div');
+        fileItem.className = 'sql-file-item';
+        fileItem.textContent = fileName;
+        fileItem.onclick = () => showSQLFile(filePath, fileName, fileItem);
+        
+        sidebar.appendChild(fileItem);
+    }
+}
+
+// Afficher un fichier SQL sélectionné
+async function showSQLFile(filePath, fileName, fileItem) {
+    const viewer = document.getElementById('sql-viewer');
+    
+    // Mettre à jour l'élément actif
+    document.querySelectorAll('.sql-file-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    fileItem.classList.add('active');
+    
+    // Charger le contenu (avec cache)
+    if (!sqlCache[filePath]) {
+        viewer.innerHTML = '<div class="loading">Chargement...</div>';
+        sqlCache[filePath] = await loadTextFile(filePath);
     }
     
-    container.innerHTML = sqlItems.join('');
+    viewer.innerHTML = `
+        <pre class="code-block"><span class="code-comment">-- ${fileName}</span>
+
+${sqlCache[filePath]}</pre>
+    `;
+    
+    // Scroll en haut du viewer
+    viewer.scrollTop = 0;
 }
 
 // ===========================================
@@ -259,12 +327,24 @@ function showSlide(index) {
     
     if (slides.length === 0) return;
     
+    // Boucler si nécessaire
+    if (index >= slides.length) index = 0;
+    if (index < 0) index = slides.length - 1;
+    
     slides.forEach(slide => slide.classList.remove('active'));
     navDots.forEach(dot => dot.classList.remove('active'));
     
     slides[index].classList.add('active');
     navDots[index].classList.add('active');
     currentSlide = index;
+}
+
+function nextSlide() {
+    showSlide(currentSlide + 1);
+}
+
+function prevSlide() {
+    showSlide(currentSlide - 1);
 }
 
 // Auto-advance carousel
@@ -275,16 +355,27 @@ function startCarousel() {
             currentSlide = (currentSlide + 1) % slides.length;
             showSlide(currentSlide);
         }
-    }, 8000);
+    }, 10000); // Changé à 10 secondes pour plus de temps de lecture
 }
+
+// Navigation clavier pour le carousel
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+        prevSlide();
+    } else if (e.key === 'ArrowRight') {
+        nextSlide();
+    }
+});
 
 // ===========================================
 // SECTIONS PLIABLES
 // ===========================================
 
-function toggleCollapsible(id) {
+function toggleCollapsible(id, event) {
+    // Si event n'est pas passé, on utilise window.event
+    const evt = event || window.event;
     const content = document.getElementById(id);
-    const btn = event.target.closest('.collapsible-btn');
+    const btn = evt ? evt.target.closest('.collapsible-btn') : document.querySelector(`[onclick*="${id}"]`);
     const arrow = btn.querySelector('.arrow');
     
     if (content.classList.contains('open')) {
@@ -296,7 +387,7 @@ function toggleCollapsible(id) {
         
         // Charger le contenu si nécessaire
         if (id === 'more-sql' && !content.dataset.loaded) {
-            loadAllSQL();
+            loadSQLBrowser();
             content.dataset.loaded = 'true';
         }
     }
@@ -335,11 +426,36 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // ===========================================
+// RACCOURCIS CLAVIER
+// ===========================================
+
+document.addEventListener('keydown', (e) => {
+    // T = Toggle Timer
+    if (e.key === 't' || e.key === 'T') {
+        if (!e.target.matches('input, textarea')) {
+            toggleTimer();
+        }
+    }
+    
+    // Espace = Démarrer/Pause Timer (si ouvert)
+    if (e.key === ' ' && document.getElementById('timerContent').classList.contains('open')) {
+        if (!e.target.matches('input, textarea, button')) {
+            e.preventDefault();
+            if (isTimerRunning) {
+                pauseTimer();
+            } else {
+                startTimer();
+            }
+        }
+    }
+});
+
+// ===========================================
 // INITIALISATION
 // ===========================================
 
 window.addEventListener('DOMContentLoaded', async () => {
-    console.log('Chargement du contenu...');
+    console.log('🚀 Chargement du contenu...');
     
     // Charger tous les contenus
     await loadDocuments();
@@ -358,5 +474,9 @@ window.addEventListener('DOMContentLoaded', async () => {
     updateTimerDisplay();
     updateActiveNav();
     
-    console.log('Contenu chargé !');
+    console.log('✅ Contenu chargé avec succès !');
+    console.log('💡 Raccourcis clavier :');
+    console.log('  - T : Ouvrir/fermer le timer');
+    console.log('  - Espace : Démarrer/Pause timer (quand ouvert)');
+    console.log('  - ← → : Naviguer dans le carousel SQL');
 });

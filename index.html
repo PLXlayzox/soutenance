@@ -30,6 +30,10 @@
             <span class="nav-icon">🎯</span>
             <span class="nav-text">Compétences</span>
         </a>
+        <a href="#difficultes" class="side-nav-link" onclick="scrollToSection('difficultes'); return false;">
+            <span class="nav-icon">⚠️</span>
+            <span class="nav-text">Difficultés</span>
+        </a>
         <a href="#bilan" class="side-nav-link" onclick="scrollToSection('bilan'); return false;">
             <span class="nav-icon">✅</span>
             <span class="nav-text">Bilan</span>
@@ -105,7 +109,9 @@
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
-                            <div class="client-logo">VE</div>
+                            <div class="client-logo-img">
+                                <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/4/4b/Logo_Vinci_Energies.svg/1200px-Logo_Vinci_Energies.svg.png" alt="Vinci Energies" class="logo-img">
+                            </div>
                             <div class="client-name">Vinci Energies</div>
                         </div>
                         <div class="flip-card-back">
@@ -162,7 +168,7 @@
 
             <!-- Section pliable : Informations détaillées -->
             <div class="collapsible-section">
-                <button class="collapsible-btn" onclick="toggleCollapsible('info-entreprise')">
+                <button class="collapsible-btn" onclick="toggleCollapsible('info-entreprise', event)">
                     <span class="arrow">▶</span> Informations complémentaires sur l'entreprise
                 </button>
                 <div id="info-entreprise" class="collapsible-content">
@@ -203,7 +209,7 @@
 
             <!-- Journal de bord -->
             <div class="collapsible-section">
-                <button class="collapsible-btn" onclick="toggleCollapsible('journal-bord')">
+                <button class="collapsible-btn" onclick="toggleCollapsible('journal-bord', event)">
                     <span class="arrow">▶</span> Consulter mon journal de bord
                 </button>
                 <div id="journal-bord" class="collapsible-content">
@@ -289,10 +295,16 @@
             <h3>Exemples de Code Développé - Requêtes SQL</h3>
             <div class="code-carousel">
                 <div class="carousel-header">
-                    <div class="dot red"></div>
-                    <div class="dot yellow"></div>
-                    <div class="dot green"></div>
-                    <span class="carousel-label" id="carousel-label">Requêtes SQL Principales</span>
+                    <div class="carousel-header-left">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                        <span class="carousel-label" id="carousel-label">Requêtes SQL Principales</span>
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-ctrl-btn" onclick="prevSlide()">❮</button>
+                        <button class="carousel-ctrl-btn" onclick="nextSlide()">❯</button>
+                    </div>
                 </div>
                 <div class="carousel-content" id="sql-carousel">
                     <!-- Slides chargées dynamiquement depuis les fichiers SQL -->
@@ -307,12 +319,19 @@
 
             <!-- Requêtes SQL supplémentaires -->
             <div class="collapsible-section">
-                <button class="collapsible-btn" onclick="toggleCollapsible('more-sql')">
-                    <span class="arrow">▶</span> Voir toutes les requêtes SQL développées
+                <button class="collapsible-btn compact" onclick="toggleCollapsible('more-sql', event)">
+                    <span class="arrow">▶</span> Toutes les requêtes SQL (14 fichiers)
                 </button>
-                <div id="more-sql" class="collapsible-content">
-                    <div id="all-sql-queries" class="sql-grid">
-                        <!-- Toutes les requêtes SQL chargées ici -->
+                <div id="more-sql" class="collapsible-content compact">
+                    <div class="sql-browser">
+                        <div class="sql-sidebar" id="sql-sidebar">
+                            <!-- Liste des fichiers générée dynamiquement -->
+                        </div>
+                        <div class="sql-viewer" id="sql-viewer">
+                            <div class="sql-viewer-placeholder">
+                                Sélectionnez un fichier SQL dans la liste pour l'afficher
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -380,7 +399,7 @@
 
             <!-- Exercices pratiques -->
             <div class="collapsible-section">
-                <button class="collapsible-btn" onclick="toggleCollapsible('exercices')">
+                <button class="collapsible-btn" onclick="toggleCollapsible('exercices', event)">
                     <span class="arrow">▶</span> Exercices et cas pratiques réalisés
                 </button>
                 <div id="exercices" class="collapsible-content">
@@ -392,7 +411,7 @@
         </section>
 
         <!-- Section 6: Difficultés et Solutions -->
-        <section class="section">
+        <section class="section" id="difficultes">
             <h2>Difficultés Rencontrées et Solutions Apportées</h2>
             
             <div class="timeline">
