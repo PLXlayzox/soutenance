@@ -124,7 +124,6 @@ const imageFiles = [
     'ressources/images/image.png',
     'ressources/images/image(2).png',
     'ressources/images/image(3).png',
-    'ressources/images/image(4).png',
     'ressources/images/image(5).png',
     'ressources/images/image(6).png'
 ];
